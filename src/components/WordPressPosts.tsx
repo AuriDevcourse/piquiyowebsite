@@ -9,7 +9,7 @@ export const WordPressPosts = () => {
     const fetchPosts = async () => {
       try {
         // Replace with your WordPress GraphQL endpoint
-        const response = await fetch('https://your-wordpress-site.com/graphql', {
+        const response = await fetch('http://piquiyo.local/graphql', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
