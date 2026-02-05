@@ -8,46 +8,20 @@ export const WordPressPosts = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // Replace with your WordPress GraphQL endpoint
-        const response = await fetch('https://2c8a-197-211-51-31.ngrok-free.app/graphql', {
-          method: 'POST',
+        // Using WordPress REST API instead of GraphQL
+        const response = await fetch('http://piquiyo.local/wp-json/wp/v2/posts?per_page=6&_embed', {
+          method: 'GET',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({
-            query: `
-              query GetPosts {
-                posts(first: 6) {
-                  nodes {
-                    title
-                    excerpt
-                    date
-                    slug
-                    author {
-                      node {
-                        name
-                      }
-                    }
-                    featuredImage {
-                      node {
-                        sourceUrl
-                        altText
-                      }
-                    }
-                  }
-                }
-              }
-            `
-          })
         });
 
-        const data = await response.json();
-        
-        if (data.errors) {
-          throw new Error(data.errors[0].message);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        setPosts(data.data.posts.nodes);
+        const data = await response.json();
+        setPosts(data);
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Failed to fetch posts');
       } finally {
@@ -83,24 +57,25 @@ export const WordPressPosts = () => {
       <h2 className="text-3xl font-bold mb-8 text-center">Latest from WordPress</h2>
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {posts.map((post) => (
-          <article key={post.slug} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
-            {post.featuredImage?.node?.sourceUrl && (
+          <article key={post.id} className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow">
+            {post._embedded?.['wp:featuredmedia']?.[0]?.source_url && (
               <img
-                src={post.featuredImage.node.sourceUrl}
-                alt={post.featuredImage.node.altText || post.title}
+                src={post._embedded['wp:featuredmedia'][0].source_url}
+                alt={post._embedded['wp:featuredmedia'][0].alt_text || post.title.rendered}
                 className="w-full h-48 object-cover"
               />
             )}
             <div className="p-6">
-              <h3 className="text-xl font-semibold mb-2 line-clamp-2">
-                {post.title}
-              </h3>
+              <h3 
+                className="text-xl font-semibold mb-2 line-clamp-2"
+                dangerouslySetInnerHTML={{ __html: post.title.rendered }}
+              />
               <div 
                 className="text-gray-600 mb-4 line-clamp-3"
-                dangerouslySetInnerHTML={{ __html: post.excerpt }}
+                dangerouslySetInnerHTML={{ __html: post.excerpt.rendered }}
               />
               <div className="flex justify-between items-center text-sm text-gray-500">
-                <span>{post.author?.node?.name}</span>
+                <span>{post._embedded?.author?.[0]?.name}</span>
                 <span>{new Date(post.date).toLocaleDateString()}</span>
               </div>
             </div>
