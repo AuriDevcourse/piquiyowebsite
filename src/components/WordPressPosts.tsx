@@ -8,8 +8,8 @@ export const WordPressPosts = () => {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        // Using WordPress REST API instead of GraphQL
-        const response = await fetch('http://piquiyo.local/wp-json/wp/v2/posts?per_page=6&_embed', {
+        // Using WordPress REST API with ngrok for HTTPS
+        const response = await fetch('https://2c8a-197-211-51-31.ngrok-free.app/wp-json/wp/v2/posts?per_page=6&_embed', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

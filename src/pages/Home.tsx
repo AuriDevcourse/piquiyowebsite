@@ -10,7 +10,7 @@ import { OurApproach } from '../components/sections/OurApproach'
 import { WhyPiquiyo } from '../components/sections/WhyPiquiyo'
 import { FAQ } from '../components/sections/FAQ'
 import { WhatWeDo } from '../components/sections/WhatWeDo'
-import { WordPressPosts } from '../components/WordPressPosts'
+// import { WordPressPosts } from '../components/WordPressPosts'
 import { Footer } from '../components/layout/Footer'
 
 export const Home: React.FC = () => {
@@ -28,7 +28,7 @@ export const Home: React.FC = () => {
         <WhyPiquiyo />
         <FAQ />
         <WhatWeDo />
-        <WordPressPosts />
+        {/* <WordPressPosts /> */}
       </main>
       <Footer />
     </div>
