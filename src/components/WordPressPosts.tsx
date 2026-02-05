@@ -9,7 +9,7 @@ export const WordPressPosts = () => {
     const fetchPosts = async () => {
       try {
         // Replace with your WordPress GraphQL endpoint
-        const response = await fetch('https://9b8f-197-211-51-31.ngrok-free.app/graphql', {
+        const response = await fetch('https://2c8a-197-211-51-31.ngrok-free.app/graphql', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
