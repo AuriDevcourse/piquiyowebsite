@@ -2,12 +2,12 @@
   "name": "piquiyo",
   "version": "1.0.0",
   "type": "module",
-  "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview",
-    "typecheck": "tsc --noEmit"
-  },
+ "scripts": {
+  "dev": "vite",
+  "build": "node ./node_modules/vite/bin/vite.js build",
+  "preview": "node ./node_modules/vite/bin/vite.js preview",
+  "typecheck": "node ./node_modules/typescript/bin/tsc --noEmit"
+},
   "dependencies": {
     "framer-motion": "^12.31.0",
     "lucide-react": "^0.563.0",
